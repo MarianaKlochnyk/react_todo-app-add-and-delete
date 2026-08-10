@@ -21,6 +21,7 @@ enum ErrorMessage {
   Load = 'Unable to load todos',
   Add = 'Unable to add a todo',
   Delete = 'Unable to delete a todo',
+  EmptyTitle = 'Title should not be empty',
 }
 
 export const App: React.FC = () => {
@@ -127,7 +128,7 @@ export const App: React.FC = () => {
     const trimmedTitle = title.trim();
 
     if (!trimmedTitle) {
-      showError('Title should not be empty');
+      showError(ErrorMessage.EmptyTitle);
 
       return;
     }

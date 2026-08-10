@@ -37,10 +37,6 @@ export const App: React.FC = () => {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  if (!USER_ID) {
-    return <UserWarning />;
-  }
-
   const filters = [
     {
       label: 'All',
@@ -97,12 +93,10 @@ export const App: React.FC = () => {
       });
   };
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     loadTodos();
   }, []);
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     if (tempTodo === null) {
       inputRef.current?.focus();
@@ -190,6 +184,10 @@ export const App: React.FC = () => {
         inputRef.current?.focus();
       });
   };
+
+  if (!USER_ID) {
+    return <UserWarning />;
+  }
 
   return (
     <div className="todoapp">

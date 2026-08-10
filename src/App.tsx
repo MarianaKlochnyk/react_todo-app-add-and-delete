@@ -24,29 +24,22 @@ enum ErrorMessage {
 }
 
 export const App: React.FC = () => {
+  const [todos, setTodos] = useState<Todo[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [filter, setFilter] = useState(Filter.All);
+  const [title, setTitle] = useState('');
+  const [deletingTodoId, setDeletingTodoId] = useState<number | null>(null);
+  const [tempTodo, setTempTodo] = useState<Todo | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [isClearing, setIsClearing] = useState(false);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
   if (!USER_ID) {
     return <UserWarning />;
   }
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [todos, setTodos] = useState<Todo[]>([]);
-  // eslint-disable-next-line react-hooks/rules-of-hooks, @typescript-eslint/no-unused-vars
-  const [isLoading, setIsLoading] = useState(false);
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [error, setError] = useState('');
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [filter, setFilter] = useState(Filter.All);
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [title, setTitle] = useState('');
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [deletingTodoId, setDeletingTodoId] = useState<number | null>(null);
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [tempTodo, setTempTodo] = useState<Todo | null>(null);
-  // eslint-disable-next-line react-hooks/rules-of-hooks, @typescript-eslint/no-unused-vars
-  const [isClearing, setIsClearing] = useState(false);
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const filters = [
     {

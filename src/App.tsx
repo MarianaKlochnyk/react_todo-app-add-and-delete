@@ -31,7 +31,7 @@ export const App: React.FC = () => {
   const [error, setError] = useState('');
   const [filter, setFilter] = useState(Filter.All);
   const [title, setTitle] = useState('');
-  const [deletingTodoId, setDeletingTodoId] = useState<number | null>(null);
+  const [deletingTodoIds, setDeletingTodoIds] = useState<number[]>([]);
   const [tempTodo, setTempTodo] = useState<Todo | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isClearing, setIsClearing] = useState(false);
@@ -105,7 +105,7 @@ export const App: React.FC = () => {
   }, [tempTodo]);
 
   const removeTodo = (todoId: number) => {
-    setDeletingTodoId(todoId);
+    setDeletingTodoIds(currentIds => [...currentIds, todoId]);
 
     deleteTodo(todoId)
       .then(() => {
@@ -117,7 +117,10 @@ export const App: React.FC = () => {
         showError(ErrorMessage.Delete);
       })
       .finally(() => {
-        setDeletingTodoId(null);
+        setDeletingTodoIds(currentIds =>
+          currentIds.filter(id => id !== todoId),
+        );
+
         inputRef.current?.focus();
       });
   };
@@ -230,7 +233,7 @@ export const App: React.FC = () => {
                   <div
                     data-cy="TodoLoader"
                     className={classNames('modal overlay', {
-                      'is-active': deletingTodoId === todo.id,
+                      'is-active': deletingTodoIds.includes(todo.id),
                     })}
                   >
                     <div
